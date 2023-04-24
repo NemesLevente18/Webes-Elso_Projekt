@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+  </head>
+
+  <!-- CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box !important;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: table;
+      width: 100%;
+      height: 100%;
+      background-color: #440078;
+      color: #000;
+      line-height: 1.6;
+      position: relative;
+      font-family: sans-serif;
+    }
+
+    .lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      margin: auto;
+      width: 90vw;
+      z-index: -1;
+    }
+
+    @-webkit-keyframes drop {
+      0% {
+        top: -50%;
+      }
+
+      100% {
+        top: 110%;
+      }
+    }
+
+    @keyframes drop {
+      0% {
+        top: -50%;
+      }
+
+      100% {
+        top: 110%;
+      }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin: 1rem;
+      color: #942828;
+    }
+
+    #wrapper {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 1rem;
+    }
+
+    #rock,
+    #paper,
+    #scissors {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #rock:hover,
+    #paper:hover,
+    #scissors:hover {
+      transform: scale(1.1);
+    }
+
+    #rock img,
+    #paper img,
+    #scissors img {
+      width: 180px;
+      height: 180px;
+    }
+
+    #score {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 10rem;
+    }
+
+    #result {
+      font-size: 2rem;
+      margin: 1rem;
+      color: #3300ff;
+    }
+
+    #player{
+      font-size: 1.5rem;
+      margin: 1rem;
+      color: #1eff00;
+    }
+
+    #computer {
+      font-size: 1.5rem;
+      margin: 1rem;
+      color: #fbff00;
+    }
+
+    #reset {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem;
+    }
+
+    #reset button {
+      width: 150px;
+      height: 50px;
+      border-radius: 5px;
+      background-color: #ff0000;
+      color: #000000;
+      font-size: 1.5rem;
+    }
+
+
+  </style>
+
+  <body>
+    <h1>Rock Paper Scissors</h1>
+
+    <!-- lines -->
+    <div class="lines">
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+
+    <!-- rock paper scissors -->
+    <div id="wrapper">
+      <div id="rock">
+        <img src="Rock.jpg" alt="rock" />
+      </div>
+      <div id="paper">
+        <img src="Paper.jpg" alt="paper" />
+      </div>
+      <div id="scissors">
+        <img src="Scrissors.jpg" alt="scissors" />
+      </div>
+    </div>
+
+    <!-- score -->
+    <div id="score">
+      <h2 id="result">Have fun!</h2>
+      <p id="player">Player: 0</p>
+      <p id="computer">Computer: 0</p>
+
+    <!-- reset button -->
+    <div id="reset">
+      <button>Reset</button>
+    </div>
+
+    <!-- javascript -->
+    <script>
+      const rock = document.querySelector("#rock");
+      const paper = document.querySelector("#paper");
+      const scissors = document.querySelector("#scissors");
+      const result = document.querySelector("#result");
+      const player = document.querySelector("#player");
+      const computer = document.querySelector("#computer");
+      const reset = document.querySelector("#reset button");
+      const options = ["rock", "paper", "scissors"];
+      let playerScore = 0;
+      let computerScore = 0;
+
+      // computer choice
+      function computerPlay() {
+        return options[Math.floor(Math.random() * options.length)];
+      }
+
+      // play round
+      function playRound(playerSelection, computerSelection) {
+        if (playerSelection === computerSelection) {
+          result.textContent = "It's a tie!";
+        } else if (
+          (playerSelection === "rock" && computerSelection === "scissors") ||
+          (playerSelection === "paper" && computerSelection === "rock") ||
+          (playerSelection === "scissors" && computerSelection === "paper")
+        ) {
+          result.textContent = "You win!";
+          playerScore++;
+          player.textContent = `Player: ${playerScore}`;
+        } else {
+          result.textContent = "You lose!";
+          computerScore++;
+          computer.textContent = `Computer: ${computerScore}`;
+        }
+      }
+
+      // reset game
+      function resetGame() {
+        playerScore = 0;
+        computerScore = 0;
+        player.textContent = `Player: ${playerScore}`;
+        computer.textContent = `Computer: ${computerScore}`;
+        result.textContent = "Have fun!";
+      }
+
+      // event listeners
+      rock.addEventListener("click", () => {
+        playRound("rock", computerPlay());
+      });
+
+      paper.addEventListener("click", () => {
+        playRound("paper", computerPlay());
+      });
+
+      scissors.addEventListener("click", () => {
+        playRound("scissors", computerPlay());
+      });
+
+      reset.addEventListener("click", () => {
+        resetGame();
+      });
+    </script>
+  </body>
+</html>
